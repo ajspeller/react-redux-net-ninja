@@ -23,12 +23,58 @@
             name: "Ryu",
             age: 30
           }
+          constructor(props) {
+            super(props);
+            this.clickHandler = this.clickHandler.bind(this);
+            this.mouseOverHandler = this.mouseOverHandler.bind(this);
+            this.copyHandler = this.copyHandler.bind(this);
+            this.submitHandler = this.submitHandler.bind(this);
+            this.changeHandler = this.changeHandler.bind(this);
+          }
+
+          submitHandler(e) {
+            e.preventDefault();
+            console.log(`form submitted`);
+            console.log(this.state.name);
+          }
+
+          changeHandler(e) {
+            console.log('The text has been changed');
+            this.setState({name: e.target.value});
+          }
+
+          // use arrow function as an alternative to have to bind the keyword this
+          clickHandler = (e) => {
+            this.generate(e);
+          }
+          mouseOverHandler(e) {
+            console.log(e.target, e.pageX, e.pageY);
+          }
+
+          // use arrow function as an alternative to have to bind the keyword this
+          generate = (e) => {
+            console.log(e.target);
+            this.setState({
+              name: 'AJ', age: 44
+            });
+            //console.log(this);
+          }
+          copyHandler(e) {
+            console.log('Make sure you list your sources!');
+          }
           render() {
             return (
-              <div className="app-content">
+              <div className="App">
                 <h1>Hey Universe</h1>
                 <p>My name is: {this.state.name} and I am {this.state.age}</p>
-              </div>
+                <button onClick={this.clickHandler}>Generate</button>
+                <button onMouseOver={this.mouseOverHandler}>Mouse Over</button>
+                <p onCopy={this.copyHandler}>What we think, We become</p>
+                <form onSubmit={this.submitHandler}>
+                  <input onChange={this.changeHandler} type="text"/>
+                  <button>Submit</button>
+                </form>
+                </div>
             );
           }
         }
@@ -38,3 +84,4 @@
     </div>
   </body>
 </html>
+ 
